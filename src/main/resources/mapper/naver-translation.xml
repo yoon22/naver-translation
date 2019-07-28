@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.osf.sp.mapper.NaverTranslationMapper">
+   <select id="selectList" resultType="map">
+      select * from translation_his
+   </select>
+   
+   <select id="selectListOne" resultType="map">
+      select * from translation_his
+      where trim(th_source) = #{source}
+      and trim(th_target) = #{target}
+      and th_text = #{text}
+   </select>
+   
+   <update id="update">
+      update translation_his
+      set th_count = TH_COUNT+1
+      where th_num = #{TH_NUM} 
+   </update>
+   
+   <insert id="insert">
+      insert into translation_his(th_num,th_source,th_target,th_text,th_result)
+      values(seq_th_num.nextval, #{source}, #{target}, #{text}, #{result})
+   </insert>
+   
+   <select id="selectOrderByCount" resultType="map">
+   select * from translation_his order by th_count desc
+   </select>
+</mapper>
